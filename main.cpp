@@ -1,6 +1,6 @@
-// Winter'24
+// Winter'26
 // Instructor: Diba Mirza
-// Student name: 
+// Student name: Zach Miller
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -13,6 +13,7 @@
 #include <set>
 #include <queue>
 #include <sstream>
+#include <unordered_map>
 using namespace std;
 
 #include "utilities.h"
@@ -38,18 +39,24 @@ int main(int argc, char** argv){
 
     string line, movieName;
     double movieRating;
+    set<Movie> s;
     // Read each file and store the name and rating
     while (getline (movieFile, line) && parseLine(line, movieName, movieRating)){
             // Use std::string movieName and double movieRating
             // to construct your Movie objects
-            // cout << movieName << " has rating " << movieRating << endl;
+            Movie m = Movie(movieName, movieRating);
+            //cout << m.getMovieName() << " has rating " << m.getMovieRating() << endl;
             // insert elements into your data structure
+            s.insert(m);
     }
 
     movieFile.close();
 
     if (argc == 2){
             //print all the movies in ascending alphabetical order of movie names
+            for (auto i = s.begin(); i != s.end(); ++i) {
+                cout << i->getMovieName() << ", " << i->getMovieRating() << endl;
+            }
             return 0;
     }
 
@@ -67,19 +74,51 @@ int main(int argc, char** argv){
         }
     }
 
+    unordered_map<string, Movie> dict;
+    
     //  For each prefix,
     //  Find all movies that have that prefix and store them in an appropriate data structure
     //  If no movie with that prefix exists print the following message
-    cout << "No movies found with prefix "<<"<replace with prefix>" << endl;
+    for (int i = 0; i < prefixes.size(); i++) {
+        string prefix = prefixes[i];
+
+        auto it = s.lower_bound(Movie(prefix));
+        if (it == s.end() || !isValidPrefix(prefix, it->getMovieName())) {
+            cout << "No movies found with prefix "<< prefix << endl;
+            continue;
+        }
+
+        while (1) {
+            if (dict.find(prefix) == dict.end()) {
+                dict[prefix] = *it;
+            } else if (dict[prefix].getMovieRating() < it->getMovieRating()){
+                dict[prefix] = *it;
+            }
+
+            it++;
+
+            if (it == s.end() || !isValidPrefix(prefix, it->getMovieName())) break;
+        }
+    }
 
     //  For each prefix,
     //  Print the highest rated movie with that prefix if it exists.
-    cout << "Best movie with prefix " << "<replace with prefix>" << " is: " << "replace with movie name" << " with rating " << std::fixed << std::setprecision(1) << "replace with movie rating" << endl;
+    for (string p : prefixes) {
+        if (dict.find(p) == dict.end()) continue;
+        cout << "Best movie with prefix " << p << " is: " << dict[p].getMovieName() << " with rating " << std::fixed << std::setprecision(1) << dict[p].getMovieRating() << endl;
+    }
 
     return 0;
 }
 
 /* Add your run time analysis for part 3 of the assignment here as commented block*/
+/*
+Part 3a:
+The time complexity is O().
+
+Part 3b:
+The space complexity is O().
+*/
 
 bool parseLine(string &line, string &movieName, double &movieRating) {
     int commaIndex = line.find_last_of(",");

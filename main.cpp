@@ -74,7 +74,7 @@ int main(int argc, char** argv){
         }
     }
 
-    unordered_map<string, Movie> dict;
+    unordered_map<string, set<Movie, CompareByRating>> dict;
     
     //  For each prefix,
     //  Find all movies that have that prefix and store them in an appropriate data structure
@@ -89,15 +89,15 @@ int main(int argc, char** argv){
         }
 
         while (1) {
-            if (dict.find(prefix) == dict.end()) {
-                dict[prefix] = *it;
-            } else if (dict[prefix].getMovieRating() < it->getMovieRating()){
-                dict[prefix] = *it;
-            }
+            dict[prefix].insert(*it);
 
             it++;
 
             if (it == s.end() || !isValidPrefix(prefix, it->getMovieName())) break;
+        }
+
+        for (auto i = dict[prefix].rbegin(); i != dict[prefix].rend(); i++) {
+            cout << i->getMovieName() << ", " << i->getMovieRating() << endl;
         }
     }
 
@@ -105,7 +105,18 @@ int main(int argc, char** argv){
     //  Print the highest rated movie with that prefix if it exists.
     for (string p : prefixes) {
         if (dict.find(p) == dict.end()) continue;
-        cout << "Best movie with prefix " << p << " is: " << dict[p].getMovieName() << " with rating " << std::fixed << std::setprecision(1) << dict[p].getMovieRating() << endl;
+
+        double maxRating = -1;
+        for (auto i = dict[p].rbegin(); i != dict[p].rend(); i++) {
+            if (maxRating == -1) {
+                maxRating = i->getMovieRating();
+                cout << "Best movie with prefix " << p << " is: " << i->getMovieName() << " with rating " << std::fixed << std::setprecision(1) << i->getMovieRating() << endl;
+            } else if (i->getMovieRating() == maxRating) {
+                cout << "Best movie with prefix " << p << " is: " << i->getMovieName() << " with rating " << std::fixed << std::setprecision(1) << i->getMovieRating() << endl;
+            } else {
+                break;
+            }
+        }
     }
 
     return 0;

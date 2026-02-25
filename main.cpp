@@ -99,10 +99,10 @@ int main(int argc, char** argv){
         for (auto i = dict[prefix].rbegin(); i != dict[prefix].rend(); i++) {
             cout << i->getMovieName() << ", " << i->getMovieRating() << endl;
         }
+
+        cout << endl;
     }
 
-    cout << endl;
-    
     //  For each prefix,
     //  Print the highest rated movie with that prefix if it exists.
     for (string p : prefixes) {

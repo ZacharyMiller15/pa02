@@ -101,6 +101,8 @@ int main(int argc, char** argv){
         }
     }
 
+    cout << endl;
+    
     //  For each prefix,
     //  Print the highest rated movie with that prefix if it exists.
     for (string p : prefixes) {
@@ -108,9 +110,8 @@ int main(int argc, char** argv){
 
         auto it = dict[p].rbegin();
         cout << "Best movie with prefix " << p << " is: " << it->getMovieName() << " with rating " << std::fixed << std::setprecision(1) << it->getMovieRating() << endl;
-
     }
-    
+
     return 0;
 }
 

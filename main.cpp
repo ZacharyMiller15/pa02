@@ -106,19 +106,11 @@ int main(int argc, char** argv){
     for (string p : prefixes) {
         if (dict.find(p) == dict.end()) continue;
 
-        double maxRating = -1;
-        for (auto i = dict[p].rbegin(); i != dict[p].rend(); i++) {
-            if (maxRating == -1) {
-                maxRating = i->getMovieRating();
-                cout << "Best movie with prefix " << p << " is: " << i->getMovieName() << " with rating " << std::fixed << std::setprecision(1) << i->getMovieRating() << endl;
-            } else if (i->getMovieRating() == maxRating) {
-                cout << "Best movie with prefix " << p << " is: " << i->getMovieName() << " with rating " << std::fixed << std::setprecision(1) << i->getMovieRating() << endl;
-            } else {
-                break;
-            }
-        }
-    }
+        auto it = dict[p].rbegin();
+        cout << "Best movie with prefix " << p << " is: " << it->getMovieName() << " with rating " << std::fixed << std::setprecision(1) << it->getMovieRating() << endl;
 
+    }
+    
     return 0;
 }
 

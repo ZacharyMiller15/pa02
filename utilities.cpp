@@ -9,6 +9,6 @@ bool isValidPrefix(std::string prefix, std::string word) {
 }
 
 bool CompareByRating::operator()(const Movie& a, const Movie& b) const {
-    if (a.getMovieRating() == b.getMovieRating()) return a.getMovieName() < b.getMovieName();
+    if (a.getMovieRating() == b.getMovieRating()) return a.getMovieName() > b.getMovieName();
     return a.getMovieRating() < b.getMovieRating();
 }

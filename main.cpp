@@ -23,8 +23,8 @@ bool parseLine(string &line, string &movieName, double &movieRating);
 
 int main(int argc, char** argv){
     if (argc < 2){
-        cerr << "Not enough arguments provided (need at least 1 argument)." << endl;
-        cerr << "Usage: " << argv[ 0 ] << " moviesFilename prefixFilename " << endl;
+        cerr << "Not enough arguments provided (need at least 1 argument)." << "\n";
+        cerr << "Usage: " << argv[ 0 ] << " moviesFilename prefixFilename " << "\n";
         exit(1);
     }
 
@@ -55,7 +55,7 @@ int main(int argc, char** argv){
     if (argc == 2){
             //print all the movies in ascending alphabetical order of movie names
             for (auto i = s.begin(); i != s.end(); ++i) {
-                cout << i->getMovieName() << ", " << i->getMovieRating() << endl;
+                cout << i->getMovieName() << ", " << i->getMovieRating() << "\n";
             }
             return 0;
     }
@@ -84,7 +84,7 @@ int main(int argc, char** argv){
 
         auto it = s.lower_bound(Movie(prefix));
         if (it == s.end() || !isValidPrefix(prefix, it->getMovieName())) {
-            cout << "No movies found with prefix "<< prefix << endl;
+            cout << "No movies found with prefix "<< prefix << "\n";
             continue;
         }
 
@@ -97,10 +97,10 @@ int main(int argc, char** argv){
         }
 
         for (auto i = dict[prefix].rbegin(); i != dict[prefix].rend(); i++) {
-            cout << i->getMovieName() << ", " << i->getMovieRating() << endl;
+            cout << i->getMovieName() << ", " << i->getMovieRating() << "\n";
         }
 
-        cout << endl;
+        cout << "\n";
     }
 
     //  For each prefix,
@@ -109,7 +109,7 @@ int main(int argc, char** argv){
         if (dict.find(p) == dict.end()) continue;
 
         auto it = dict[p].rbegin();
-        cout << "Best movie with prefix " << p << " is: " << it->getMovieName() << " with rating " << std::fixed << std::setprecision(1) << it->getMovieRating() << endl;
+        cout << "Best movie with prefix " << p << " is: " << it->getMovieName() << " with rating " << std::fixed << std::setprecision(1) << it->getMovieRating() << "\n";
     }
 
     return 0;
@@ -118,7 +118,8 @@ int main(int argc, char** argv){
 /* Add your run time analysis for part 3 of the assignment here as commented block*/
 /*
 Part 3a:
-The time complexity is O().
+Going through each major series of operations:
+Building the prefix 
 
 Part 3b:
 The space complexity is O().

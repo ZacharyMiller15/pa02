@@ -1,11 +1,9 @@
 #include "utilities.h"
 
-bool isValidPrefix(std::string prefix, std::string word) {
+bool isValidPrefix(const std::string& prefix, const std::string& word) {
     if (prefix.length() > word.length()) return false;
 
-    if (prefix == word || word.substr(0, prefix.length()) == prefix) return true;
-
-    return false;
+    return word.compare(0, prefix.size(), prefix) == 0;
 }
 
 bool CompareByRating::operator()(const Movie& a, const Movie& b) const {

@@ -4,7 +4,7 @@
 #include <string>
 #include "movies.h"
 
-bool isValidPrefix(std::string prefix, std::string word);
+bool isValidPrefix(const std::string& prefix, const std::string& word);
 
 struct CompareByRating {
     bool operator()(const Movie& a, const Movie& b) const;
